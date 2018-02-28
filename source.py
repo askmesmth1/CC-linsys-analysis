@@ -51,7 +51,7 @@ F = np.random.normal(size=(Y.size, N.size))
 '''Eigenvalues of square matrix A'''
 p = np.linalg.eigvals(A)
 
-X_files, Y_files, Y_average, time, max_val = [], [], [], [], 0.0
+X_files, Y_files, Y_temp, time, max_val = [], [], [], [], 0.0
 
 '''Main cycle'''
 for i in range(T):
@@ -68,24 +68,24 @@ for i in range(T):
     time.append(i)
     X_files.append(X)
     Y_files.append(Y)
-    Y_average.append(Y[1])
+    Y_temp.append(Y[1])
     #print('state:', X)
     #print('output:', Y)
 
 '''Overshoot and setting time'''
-overshoot = abs((max_val - Y_average[-1]) / Y_average[-1])
-for element in reversed(Y_average):
-    if abs((element - Y_average[-1]) / Y_average[-1]) > 0.05:
-        setting_time = Y_average.index(element)
+overshoot = abs((max_val - Y_temp[-1]) / Y_temp[-1])
+for element in reversed(Y_temp):
+    if abs((element - Y_temp[-1]) / Y_temp[-1]) > 0.05:
+        setting_time = Y_temp.index(element)
         break
 
 '''Results'''
 if system_is_stable(p):
     print('Система устойчива')
-    print('overshoot:', overshoot * 100, '%', '\nmaximum value:', max_val, '\nfinal value:', Y_average[-1], '\nsetting time:', setting_time)
+    print('overshoot:', overshoot * 100, '%', '\nmaximum value:', max_val, '\nfinal value:', Y_temp[-1], '\nsetting time:', setting_time)
 else:
     print('Система неустойчива')
-plt.plot(time, Y_average)
+plt.plot(time, Y_temp)
 plt.grid()
 plt.show()
 
