@@ -17,6 +17,7 @@ print(X, '\n', U, '\n', N, '\n', Y, '\n', T, '\n')
 
 def system_is_stable(a):
     result = set()
+    plt.subplot(2, 1, 1)
     for x in range(len(a)):
         plt.plot([0, a[x].real], [0, a[x].imag], 'bo--')
         if abs(a[x].real) < 1 and abs(a[x].imag) < 1:
@@ -39,7 +40,7 @@ with open("input.txt", newline='', encoding='utf-8') as file:
 
 '''Matrices'''
 A = np.random.normal(size=(X.size, X.size))
-A = A/3
+A = A/5
 #A = np.array([[-0.1, 0.3, 0.05, 0.6, 0.8, 0.06], [1, 0.1, -1, 1, 0.2, 1], [-1, -1, -0.6, 1, 0.3, 0.5], [0.07, -0.09, 1, 0.2, -0.5, -0.8], [1, -1, 0.7, 0.9, -0.9, -0.3], [1, 1, 0.8, 0.5, 0.4, 0.2]])
 #A = A/3
 B = np.random.normal(size=(X.size, U.size))
@@ -85,15 +86,16 @@ if system_is_stable(p):
     print('overshoot:', overshoot * 100, '%', '\nmaximum value:', max_val, '\nfinal value:', Y_temp[-1], '\nsetting time:', setting_time)
 else:
     print('Система неустойчива')
+plt.subplot(2,1,2)
 plt.plot(time, Y_temp)
 plt.grid()
 plt.show()
 
 '''Output'''
-with open('output.txt', 'w', encoding='utf-8') as file:
+'''with open('output.txt', 'w', encoding='utf-8') as file:
     for line in Y_files:
         file.write('Y = '+ str(line) + '\n')
-
+'''
 '''
     with open("output.csv", 'a', newline='') as file:
         writer = csv.writer(file)
